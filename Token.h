@@ -36,7 +36,7 @@ enum class Token : int {
 	MINUS,			// -
 	ASTERISK,		// *
 	SLASH,			// /
-	BACKSLASH,		// \ 
+	BACKSLASH,		//  
 	PERCENT,		// %
 	CHEVRON,		// ^
 	LBRACKET,		// [

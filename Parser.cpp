@@ -14,6 +14,10 @@
 #include <assert.h>
 #include "MDKMessages.h"
 
+#ifndef tjs_string
+typedef std::wstring tjs_string;
+#endif
+
 #define TVPThrowInternalError \
 	TVPThrowExceptionMessage(TVPMdkGetText(NUM_MDK_INTERNAL_ERROR), __FILE__,  __LINE__)
 
@@ -124,13 +128,15 @@ void Parser::AddSignWord( tjs_char sign, const ttstr& word ) {
 		auto result = TagCommandPair.insert(std::make_pair(tokenpair->second , word));
 		if( !result.second ) {
 			tjs_char ptr[128];
-			TJS_snprintf(ptr, sizeof(ptr)/sizeof(tjs_char), TVPMdkGetText( NUM_MDK_ALREADY_REGISTERED ).c_str(), sign);
-			TVPAddLog( ptr );
+			ptr[0] = sign;
+			ptr[1] = 0;
+			TVPAddLog( ttstr(TJS_W("'")) + ptr + TJS_W("' ") + TVPMdkGetText( NUM_MDK_ALREADY_REGISTERED ) );
 		}
 	} else {
 		tjs_char ptr[128];
-		TJS_snprintf(ptr, sizeof(ptr)/sizeof(tjs_char), TVPMdkGetText( NUM_MDK_CANNOT_REGISTER_WORD ).c_str(), sign);
-		TVPAddLog( ptr );
+		ptr[0] = sign;
+		ptr[1] = 0;
+		TVPAddLog( ttstr(TJS_W("'")) + ptr + TJS_W("' ") + TVPMdkGetText( NUM_MDK_CANNOT_REGISTER_WORD ));
 	}
 }
 //---------------------------------------------------------------------------
